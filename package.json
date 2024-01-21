@@ -1,0 +1,18 @@
+{
+  "name": "cdscribe",
+  "version": "1.0.0",
+  "description": "\"Cdscribe is a tool that allows you to annotate source code files. The tool retrieve the annotations using a search pattern\"",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "cdscribe": "./bin/index.js"
+  },
+  "author": "Gustavo Lemos",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "glob": "^10.3.10"
+  }
+}
