@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "\"Cdscribe is a tool that allows you to annotate source code files. The tool retrieve the annotations using a search pattern\"",
   "main": "bin/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gustavoberlat/cdscribe"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
