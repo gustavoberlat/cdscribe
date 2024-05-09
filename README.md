@@ -7,7 +7,6 @@ Text files contain annotations and can be written using any standard text editor
 It's a great solution for annotating third-party libraries. When it is not possible to insert comments in the code that can be replaced/deleted by the next version.
 
 
-
 ## Installation
 
 ### Install cdscribe 
@@ -72,6 +71,8 @@ It calculates the total price of all the items in the items array by multiplying
 ```
 
 ## Use Cases
+    
+![cdscribe](https://github.com/gustavoberlat/cdscribe/assets/59585859/02a90f07-28c4-4b91-b0fd-39228f88d982)
 
 ### Return the complete annotations file  
 ```bash
