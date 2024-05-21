@@ -1,53 +1,69 @@
 #! /usr/bin/env node
 
-const utils = require('./utils.js')
+const CLIMessages = require('./models/cli-messages.js') 
+const Validator = require('./models/validator.js')
+const File = require('./models/file.js')
+
+var filename, blade; 
 
 // Receive the argvs
-const args = process.argv.slice(2, 4);
+const args = Validator.Argv(process.argv.slice(2, 4));
 
-// Validate argvs 
-if (utils.ArgvValidator(args)) {
-  // Continue with the code
-} else { 
+if (!args){
+  return; 
+} 
+
+//Init Command
+if (args[0] === '--init') {
+  File.Init();
   return;
-};
+} else {
+  [filename, blade] = args;
+} 
 
-const filename = args[0];
-const blade = args[1];
-
-// If only filename is passed as arg 
-if (filename && !blade) {
-  utils.GetFilePath(filename)
-    .then(async path => { 
-      if (path != null) {
-        const data = await utils.ReadFile(path); 
-        utils.WriteCliMessage(1, filename);
-        console.log(data);
+//If only filename is passed as argument
+if (!blade) { 
+  (async () => {
+    try {
+      const filepath = await File.GetFilePath(filename)
+    
+      if (filepath) {
+        const fileContent = await File.ReadFile(filepath);
+        
+        CLIMessages.Success(filename);
+        console.log(fileContent);
       } else {
-        return; 
+        return;
       }
-    })
-    .catch(error => console.error('Error:', error.message));
+    } catch (error) {
+      CLIMessages.Error();
+      console.error(`Error processing file: ${filename}\n${error.message}`);
+    }
+  })();
 }
 
-// If filename and @blade is passed as arg 
-else if (filename && blade) {
-  utils.GetFilePath(filename)
-    .then(async path => {
-      const data = await utils.ReadFile(path); 
-      let regex = new RegExp(blade + '[^@]*', 'g');
-      let match = data.match(regex);
-      if (match && match.length > 0) {
-        let result = match[0].replace(blade, '').trim();
-        utils.WriteCliMessage(1, filename, blade);
-        console.log(result);
+//If filename and @blade are passed as arguments
+else if (blade) {
+  (async() => {
+    try{
+      const filepath = await File.GetFilePath(filename)
+    
+      if (filepath) {
+        const fileContent = await File.ReadFile(filepath);
+        const bladeContent = File.GetBladeContent(fileContent, blade);
+        
+        if (bladeContent) {
+          CLIMessages.Success(filename, blade);
+          console.log(bladeContent);
+        } else {
+          return; 
+        }
       } else {
-        utils.WriteCliMessage(2);
-        console.log('Error: Blade not found');
-      }       
-    })  
-    .catch(error => {
-      utils.WriteCliMessage(2);
-      console.error('Error:', error.message);
-    });
+        return;
+      }
+    } catch (error) {
+      CLIMessages.Error();
+      console.error(`Error processing file: ${filename}\n${error.message}`);
+    }
+  })();
 }
