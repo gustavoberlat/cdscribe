@@ -1,6 +1,6 @@
 {
   "name": "cdscribe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "\"Cdscribe is a tool that allows you to annotate source code files. The tool retrieve the annotations using a search pattern\"",
   "main": "bin/index.js",
   "repository": {
