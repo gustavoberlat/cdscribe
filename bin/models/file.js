@@ -21,7 +21,7 @@ function Init () {
   });
 }
 
-//Async function to get file path from command line argument
+//Function to get file path from command line argument
 async function GetFilePath (filename) {
   try {
     //Use glob to search for files matching pattern "cdscribe/**/filename.cdscribe"
@@ -61,4 +61,20 @@ function ReadFile (filepath) {
   }
 }
 
-module.exports = { Init, GetFilePath, ReadFile }
+
+function GetBladeContent (fileContent, blade) {
+  let regex = new RegExp(blade + '[^@]*', 'g');
+  let match = fileContent.match(regex);
+
+  if (match && match.length > 0) {
+    let bladeContent = match[0].replace(blade, '').trim();
+        
+    return bladeContent;
+  } else {
+    CLIMessages.Error();
+    console.error('Error: Blade not found');
+    }       
+}  
+
+
+module.exports = { Init, GetFilePath, ReadFile, GetBladeContent }
