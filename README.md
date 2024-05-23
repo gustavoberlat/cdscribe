@@ -11,7 +11,7 @@ It's a great solution for annotating third-party libraries. When it is not possi
 
 ### Install cdscribe 
 ```bash
-npm install cdscribe
+npm install -g cdscribe
 ```
 remember to give the necessary permissions
 
